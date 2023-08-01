@@ -1,0 +1,411 @@
+//INSERT SUCURSAL
+
+use ("db_campus_alquiler");
+db.sucursal.insertMany([{
+ ID_Sucursal:1,
+ Nombre:"Sucursal A",
+ Direccion:"Bucaramanga",
+ Telefono:"314-7894561"
+}
+,
+{
+ ID_Sucursal:2,
+ Nombre:"Sucursal B",
+ Direccion:"Lebrija",
+ Telefono:"317-9874587"
+}
+,
+{
+ ID_Sucursal:3,
+ Nombre:"Sucursal C",
+ Direccion:"Floridablanca",
+ Telefono:"319-4578451"
+}
+,
+{
+ ID_Sucursal:4,
+ Nombre:"Sucursal D",
+ Direccion:"Giron",
+ Telefono:"314-94754715"
+}
+,
+{
+ ID_Sucursal:5,
+ Nombre:"Sucursal E",
+ Direccion:"Piedecuesta",
+ Telefono:"312-7845784"
+}
+])
+
+//INSERT SUCURSAL AUTOMOVIL 
+
+db.sucursal_automovil.insertMany([
+    {
+        ID_Sucursal:1,
+        ID_Automovil:100,
+        Cantidad_Disponible:100
+    },
+    {
+        ID_Sucursal:2,
+        ID_Automovil:101,
+        Cantidad_Disponible:70
+    },
+    {
+        ID_Sucursal:3,
+        ID_Automovil:102,
+        Cantidad_Disponible:30
+    },
+    {
+        ID_Sucursal:4,
+        ID_Automovil:103,
+        Cantidad_Disponible:40
+    },
+    {
+        ID_Sucursal:5,
+        ID_Automovil:104,
+        Cantidad_Disponible:75
+    },
+    
+])
+
+//INSERT AUTOMOVIL
+db.automovil.insertMany([
+    {
+    ID_Automovil:1001,
+    Marca: "Chevrolet",
+    Modelo:"2023",
+    Anio:2022,
+    Tipo:"Camioneta",
+    Capacidad:8,
+    Precio_Diario:70000000
+    },
+    {
+    ID_Automovil:1002,
+    Marca: "Audi",
+    Modelo:"2024",
+    Anio:2024,
+    Tipo:"AutoMovil",
+    Capacidad:5,
+    Precio_Diario:170000000
+    },
+    {
+    ID_Automovil:1003,
+    Marca: "Toyota",
+    Modelo:"2017",
+    Anio:2017,
+    Tipo:"Camioneta",
+    Capacidad:8,
+    Precio_Diario:90000000
+    },
+    {
+    ID_Automovil:1004,
+    Marca: "Reanult",
+    Modelo:"2022",
+    Anio:2022,
+    Tipo:"Camioneta",
+    Capacidad:5,
+    Precio_Diario:34000000
+    },
+    {
+    ID_Automovil:1005,
+    Marca: "Dodge",
+    Modelo:"2015",
+    Anio:2014,
+    Tipo:"Camioneta",
+    Capacidad:7,
+    Precio_Diario:44000000
+    }
+])
+
+//INSERT RESERVA
+
+db.reserva.insertMany([
+    {
+        ID_Reserva:1,
+        ID_Cliente:123,
+        ID_Automovil:1001,
+        Fecha_Reserva:"2023-07-06",
+        Fecha_Inicio:"2023-07-10",
+        Fecha_Fin:"2023-07-20",
+        Estado:"Pago"
+    },
+    {
+        ID_Reserva:2,
+        ID_Cliente:456,
+        ID_Automovil:1002,
+        Fecha_Reserva:"2023-08-06",
+        Fecha_Inicio:"2023-08-10",
+        Fecha_Fin:"2023-08-20",
+        Estado:"Deuda"
+    },
+    {
+        ID_Reserva:3,
+        ID_Cliente:789,
+        ID_Automovil:1001,
+        Fecha_Reserva:"2023-06-06",
+        Fecha_Inicio:"2023-06-10",
+        Fecha_Fin:"2023-06-20",
+        Estado:"Confirmacion"
+    }
+    ,
+    {
+        ID_Reserva:4,
+        ID_Cliente:987,
+        ID_Automovil:1001,
+        Fecha_Reserva:"2023-05-06",
+        Fecha_Inicio:"2023-05-10",
+        Fecha_Fin:"2023-05-20",
+        Estado:"Deuda"
+    }
+    ,
+    {
+        ID_Reserva:5,
+        ID_Cliente:654,
+        ID_Automovil:1001,
+        Fecha_Reserva:"2023-03-06",
+        Fecha_Inicio:"2023-03-10",
+        Fecha_Fin:"2023-03-20",
+        Estado:"Pago"
+    }
+])
+
+
+//INSERT ALQUILER
+
+db.alquiler.insertMany([
+    {
+        ID_Alquiler:30,
+        ID_Cliente:123,
+        ID_Automovil:1001,
+        Fecha_Inicio:"2023-07-10",
+        Fecha_Fin:"2023-07-25",
+        Costo_Total:1000000,
+        Estado:"Pago"
+    },
+    {
+        ID_Alquiler:31,
+        ID_Cliente:123,
+        ID_Automovil:1002,
+        Fecha_Inicio:"2023-04-10",
+        Fecha_Fin:"2023-04-25",
+        Costo_Total:750000,
+        Estado:"Pago"
+    },
+    {
+        ID_Alquiler:32,
+        ID_Cliente:123,
+        ID_Automovil:1003,
+        Fecha_Inicio:"2023-09-10",
+        Fecha_Fin:"2023-09-25",
+        Costo_Total:850000,
+        Estado:"Pago"
+    },
+    {
+        ID_Alquiler:33,
+        ID_Cliente:123,
+        ID_Automovil:1004,
+        Fecha_Inicio:"2023-02-10",
+        Fecha_Fin:"2023-02-25",
+        Costo_Total:450000,
+        Estado:"Pago"
+    },
+    {
+        ID_Alquiler:34,
+        ID_Cliente:123,
+        ID_Automovil:1005,
+        Fecha_Inicio:"2023-01-10",
+        Fecha_Fin:"2023-01-25",
+        Costo_Total:980000,
+        Estado:"Pago"
+    }
+])
+
+db.cliente.insertMany([
+    {
+        ID_Cliente:123,
+        Nombre:"Andres Eduardo",
+        Apellido:"Mantilla Garcia",
+        DNI:"00523821F",
+        Direccion:"Lebrija Santander",
+        Telefono:"317-8457895",
+        Email:"eduardoma@email.com"
+    },
+    {
+        ID_Cliente:456,
+        Nombre:"Alberto",
+        Apellido:"Martinez",
+        DNI:"4451448F",
+        Direccion:"Giron Santander",
+        Telefono:"317-8457895",
+        Email:"eduardoma@email.com"
+    },
+    {
+        ID_Cliente:789,
+        Nombre:"Jose",
+        Apellido:"Florez",
+        DNI:"00457845F",
+        Direccion:"Florida Santander",
+        Telefono:"317-8457895",
+        Email:"eduardoma@email.com"
+    },
+    {
+        ID_Cliente:987,
+        Nombre:"Maria",
+        Apellido:"Jaimes",
+        DNI:"987454154F",
+        Direccion:"Florida Santander",
+        Telefono:"317-8457895",
+        Email:"eduardoma@email.com"
+    },
+    {
+        ID_Cliente:654,
+        Nombre:"Juanes",
+        Apellido:"Florez",
+        DNI:"2445100F",
+        Direccion:"Bucaramanga Santander",
+        Telefono:"317-8457895",
+        Email:"eduardoma@email.com"
+    }
+])
+
+db.registro_entrega.insertMany([
+    {
+        ID_Registro:10,
+        ID_Alquiler:30,
+        ID_Empleado:20,
+        Fecha_Entrega:"2023-07-15",
+        Combustible_Entregado:14.5,
+        Kilometraje_Entregado:35000
+    },
+    {
+        ID_Registro:11,
+        ID_Alquiler:31,
+        ID_Empleado:21,
+        Fecha_Entrega:"2023-09-10",
+        Combustible_Entregado:10.5,
+        Kilometraje_Entregado:45000
+    },
+    {
+        ID_Registro:12,
+        ID_Alquiler:32,
+        ID_Empleado:22,
+        Fecha_Entrega:"2023-08-12",
+        Combustible_Entregado:13.5,
+        Kilometraje_Entregado:54000
+    },
+    {
+        ID_Registro:13,
+        ID_Alquiler:33,
+        ID_Empleado:23,
+        Fecha_Entrega:"2023-10-14",
+        Combustible_Entregado:17.5,
+        Kilometraje_Entregado:78000
+    },
+    {
+        ID_Registro:14,
+        ID_Alquiler:34,
+        ID_Empleado:24,
+        Fecha_Entrega:"2023-03-06",
+        Combustible_Entregado:15.5,
+        Kilometraje_Entregado:37000
+    }
+])
+
+
+db.registro_devolucion.insertMany([
+    {
+        ID_Registro:12,
+        ID_Alquiler:30,
+        ID_Empleado:20,
+        Fecha_Devolucion:"2023-07-17",
+        Combustible_Devuelto:7,
+        Kilometraje_Devuelto:50000,
+        Monto_Adicional:25000
+    },
+    {
+        ID_Registro:13,
+        ID_Alquiler:31,
+        ID_Empleado:21,
+        Fecha_Devolucion:"2023-08-17",
+        Combustible_Devuelto:5,
+        Kilometraje_Devuelto:60000,
+        Monto_Adicional:34000
+    },
+    {
+        ID_Registro:12,
+        ID_Alquiler:32,
+        ID_Empleado:22,
+        Fecha_Devolucion:"2023-04-17",
+        Combustible_Devuelto:9,
+        Kilometraje_Devuelto:75000,
+        Monto_Adicional:39000
+    },
+    {
+        ID_Registro:12,
+        ID_Alquiler:33,
+        ID_Empleado:23,
+        Fecha_Devolucion:"2023-09-17",
+        Combustible_Devuelto:8,
+        Kilometraje_Devuelto:95000,
+        Monto_Adicional:41000
+    },
+    {
+        ID_Registro:12,
+        ID_Alquiler:34,
+        ID_Empleado:24,
+        Fecha_Devolucion:"2023-08-17",
+        Combustible_Devuelto:4,
+        Kilometraje_Devuelto:105000,
+        Monto_Adicional:13000
+    }
+])
+
+
+db.empleado.insertMany([
+    {
+        ID_Empleado:20,
+        Nombre:"Andres",
+        Apellido:"Martinez",
+        DNI:"454874F",
+        Direccion:"Lebrija Santander",
+        Telefono:"314-8784578",
+        Cargo:"Administrativo"
+    },
+    {
+        ID_Empleado:21,
+        Nombre:"Sofia",
+        Apellido:"Barajas",
+        DNI:"454874F",
+        Direccion:"Lebrija Santander",
+        Telefono:"313-5478457",
+        Cargo:"Administrativo"
+    },
+    {
+        ID_Empleado:22,
+        Nombre:"stiven",
+        Apellido:"Quiñonez",
+        DNI:"454874F",
+        Direccion:"Lebrija Santander",
+        Telefono:"314-5789453",
+        Cargo:"Administrativo"
+    },
+    {
+        ID_Empleado:23,
+        Nombre:"Omar",
+        Apellido:"Martinez",
+        DNI:"454874F",
+        Direccion:"Lebrija Santander",
+        Telefono:"315-8794578",
+        Cargo:"Administrativo"
+    },
+    {
+        ID_Empleado:24,
+        Nombre:"Jhon",
+        Apellido:"Cierra",
+        DNI:"454874F",
+        Direccion:"Lebrija Santander",
+        Telefono:"316-8745487",
+        Cargo:"Administrativo"
+    }
+])
+
