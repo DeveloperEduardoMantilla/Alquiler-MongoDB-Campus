@@ -1,7 +1,6 @@
 //INSERT SUCURSAL
 
-use ("db_campus_alquiler");
-db.sucursal.insertMany([{
+/* db.sucursal.insertMany([{
  ID_Sucursal:1,
  Nombre:"Sucursal A",
  Direccion:"Bucaramanga",
@@ -407,5 +406,7 @@ db.empleado.insertMany([
         Telefono:"316-8745487",
         Cargo:"Administrativo"
     }
-])
+]) */
 
+use ("db_campus_alquiler");
+db.cliente.find()
