@@ -171,6 +171,7 @@ db.reserva.insertMany([
 
 //INSERT ALQUILER
 
+
 db.alquiler.insertMany([
     {
         ID_Alquiler:30,
@@ -179,7 +180,7 @@ db.alquiler.insertMany([
         Fecha_Inicio:"2023-07-10",
         Fecha_Fin:"2023-07-25",
         Costo_Total:1000000,
-        Estado:"Pago"
+        Estado:"Disponible"
     },
     {
         ID_Alquiler:31,
@@ -188,7 +189,7 @@ db.alquiler.insertMany([
         Fecha_Inicio:"2023-04-10",
         Fecha_Fin:"2023-04-25",
         Costo_Total:750000,
-        Estado:"Pago"
+        Estado:"Activo"
     },
     {
         ID_Alquiler:32,
@@ -197,7 +198,7 @@ db.alquiler.insertMany([
         Fecha_Inicio:"2023-09-10",
         Fecha_Fin:"2023-09-25",
         Costo_Total:850000,
-        Estado:"Pago"
+        Estado:"Disponible"
     },
     {
         ID_Alquiler:33,
@@ -206,7 +207,7 @@ db.alquiler.insertMany([
         Fecha_Inicio:"2023-02-10",
         Fecha_Fin:"2023-02-25",
         Costo_Total:450000,
-        Estado:"Pago"
+        Estado:"Activo"
     },
     {
         ID_Alquiler:34,
@@ -215,7 +216,7 @@ db.alquiler.insertMany([
         Fecha_Inicio:"2023-01-10",
         Fecha_Fin:"2023-01-25",
         Costo_Total:980000,
-        Estado:"Pago"
+        Estado:"Activo"
     }
 ])
 
@@ -409,4 +410,57 @@ db.empleado.insertMany([
 ]) */
 
 use ("db_campus_alquiler");
-db.cliente.find()
+
+//Mostrar todos los clientes registrados en la base de datos.
+db.cliente.find();
+
+//Obtener todos los automóviles disponibles para alquiler.
+db.alquiler.find({Estado:{$eq:"Disponible"}});
+
+/*Listar todos los alquileres activos junto con los datos de los
+clientes relacionados.*/
+db.alquiler.aggregate([
+    {
+        $lookup: {
+          from: "cliente",
+          localField: "ID_Cliente",
+          foreignField: "ID_Cliente",
+          as: "dataCliente"
+        }
+    },
+    {
+        $match: {
+          "Estado":{$eq: "Disponible"}
+        }
+    },
+    {
+        $project:{
+            "_id":0,
+            "Estado":0,
+            "ID_Cliente":0,
+            "dataCliente._id":0,
+            "dataCliente.DNI":0,
+            "dataCliente.Direccion":0,
+            "dataCliente.Telefono":0,
+            "dataCliente.Email":0
+        }
+    }
+]);
+
+
+use ("db_campus_alquiler");
+db.reserva.aggregate([
+    {
+        $lookup: {
+          from: "automovil",
+          localField: "ID_Automovil",
+          foreignField: "ID_Automovil",
+          as: "result"
+        }
+    },
+    {
+        $match: {
+            "Estado":{$eq: "Pendientes"}
+        }
+    }
+])
