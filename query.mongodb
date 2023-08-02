@@ -409,16 +409,35 @@ db.empleado.insertMany([
     }
 ]) */
 
+
+//2. Mostrar todos los clientes registrados en la base de datos.
 use ("db_campus_alquiler");
+db.cliente.aggregate([
+    {
+        $project: {
+          "_id":0
+        }
+    }
+]);
 
-//Mostrar todos los clientes registrados en la base de datos.
-db.cliente.find();
+//3. Obtener todos los automóviles disponibles para alquiler.
+use ("db_campus_alquiler");
+db.alquiler.aggregate([
+    {
+        $match:{
+            Estado:{$eq:"Disponible"}
+        }
+    },
+    {
+        $project: {
+            "_id":0
+        }
+    }
+]);
 
-//Obtener todos los automóviles disponibles para alquiler.
-db.alquiler.find({Estado:{$eq:"Disponible"}});
-
-/*Listar todos los alquileres activos junto con los datos de los
+/*4. Listar todos los alquileres activos junto con los datos de los
 clientes relacionados.*/
+use ("db_campus_alquiler");
 db.alquiler.aggregate([
     {
         $lookup: {
@@ -447,7 +466,8 @@ db.alquiler.aggregate([
     }
 ]);
 
-
+/*5. Mostrar todas las reservas pendientes con los datos del cliente 
+y el automóvil reservado. */
 use ("db_campus_alquiler");
 db.reserva.aggregate([
     {
@@ -455,7 +475,22 @@ db.reserva.aggregate([
           from: "automovil",
           localField: "ID_Automovil",
           foreignField: "ID_Automovil",
-          as: "result"
+          as: "dataAutomovil"
+        }
+    },
+    {
+        $lookup:{
+            from: "cliente",
+            localField:"ID_Cliente",
+            foreignField:"ID_Cliente",
+            as:"dataCliente"
+        }
+    },
+    {
+        $project: {
+            "_id":0,
+            "dataAutomovil._id":0,
+            "dataCliente._id":0,
         }
     },
     {
@@ -464,3 +499,80 @@ db.reserva.aggregate([
         }
     }
 ])
+
+//6. Obtener los detalles del alquiler con el ID_Alquiler específico.
+use ("db_campus_alquiler");
+db.alquiler.aggregate([
+    {
+        $project: {
+            "_id":0
+        }
+    },
+    {
+        $match: {
+            "ID_Alquiler":30
+        }
+    }
+])
+
+//7. Listar los empleados con el cargo de "Vendedor"
+use("db_campus_alquiler");
+db.empleado.aggregate([
+    {
+        $project: {
+          "_id":0
+        }
+    },
+    {
+        $match: {
+            "Cargo":"Vendedor"
+        }
+    }
+])
+
+/*8. Mostrar la cantidad total de automóviles disponibles en cada 
+sucursal.*/
+use("db_campus_alquiler");
+db.sucursal_automovil.aggregate([
+    {
+        _id:"ID_Surcusal"
+    },
+    {
+        $project: {
+            "_id":0,
+            "ID_Sucursal":"$_id",
+            "ID_Automovil":1,
+            "Cantidad_Disponible":1
+        }
+    }
+])
+
+
+
+/*  {
+        $lookup: {
+          from: "sucursal",
+          localField: "ID_Sucursal",
+          foreignField: "ID_Sucursal",
+          as: "dataAutomovil"
+        }
+    },
+    {
+        $unwind: "$dataAutomovil"
+    },
+    {
+        $group: {
+          _id: "ID_Sucursal",
+          total_Automoviles:{$sum :"Cantidad_Disponible"}
+        }
+    },
+    {
+        $project: {
+          "_id":0,
+          "ID_Sucursal":"$_id",
+          "Sucursal.Nombre":1,
+          "Total_Automoviles":1
+
+        }
+    }
+ */
