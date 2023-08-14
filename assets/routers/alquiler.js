@@ -1,14 +1,14 @@
-import { con } from "../db/atlas.js";
-import {Router} from "express";
+import express from "express";
+import {conx} from '../db/atlas.js';
 
-const appAlquiler = Router();
+const storageAlquiler = express();
+storageAlquiler.use(express.json())
 
-
-appAlquiler.get("/", async(req, res) => {
-    let db = await con();
+storageAlquiler.get("/", async (req,res)=>{
+    let db = await conx();
     let alquiler = db.collection("alquiler");
-    let result = await alquiler.find();
+    let result = await alquiler.find({}).toArray();
     res.send(result);
-});
+})
 
-export default appAlquiler; 
+export default storageAlquiler;

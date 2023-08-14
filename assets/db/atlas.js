@@ -1,16 +1,17 @@
-import dotenv from 'dotenv'
-import { MongoClient } from 'mongodb';
+import dotenv from 'dotenv';
+import {MongoClient} from 'mongodb';
 dotenv.config("../");
-export async function con() {
-  try {
-    const uri = `mongodb+srv://${process.env.ATLAS_USER}:${process.env.ATLAS_PASSWORD}@cluster0.64duawp.mongodb.net/${process.env.ATLAS_DB}`;
+
+export async function conx(){
+  try{
+    const uri=`mongodb+srv://${process.env.ATLAS_USER}:${process.env.ATLAS_PASSWORD}@cluster0.wzlqqfn.mongodb.net/${process.env.ATLAS_DB}`;
     const options = {
       useNewUrlParser: true,
-      useUnifiedTopology: true,
+      useUnifiedTopology: true
     };
-    const client = await MongoClient.connect(uri, options);
+      const client = await MongoClient.connect(uri, options);
     return client.db();
-  } catch (error) {
-    return {status: 500, message: error};
+  }catch(e){
+    return {status:500,message:e.message}
   }
 }
