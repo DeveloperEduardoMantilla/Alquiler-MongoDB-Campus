@@ -100,7 +100,7 @@ appAlquiler.get("/costoTotal/:idAlquiler", limitApi(), async(req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
     let idAlquiler = req.params.idAlquiler;
-    let result = await alquiler.find({ID_Alquiler: 34},{projection:{_id:0, ID_Alquiler:1, Costo_Total:1}}).toArray();
+    let result = await alquiler.find({ID_Alquiler: parseInt(idAlquiler)},{projection:{_id:0, ID_Alquiler:1, Costo_Total:1}}).toArray();
     if(result.length==0){
         res.send({message:"No se encontraron registros"})
     }else{
