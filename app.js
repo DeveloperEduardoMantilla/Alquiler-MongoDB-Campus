@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import alquiler from './assets/routers/alquiler.js';
+import cliente from './assets/routers/cliente.js';
 import {JWT, JWTVerify} from "./assets/controller/jwt.js";
 
 dotenv.config();
@@ -11,6 +12,8 @@ appExpress.use(express.json());
 
 //Routers
 appExpress.use("/alquiler", JWTVerify, alquiler);
+appExpress.use("/cliente", JWTVerify, cliente);
+
 appExpress.use("/token", JWT);
 
 appExpress.use("/",(req,res)=>{
