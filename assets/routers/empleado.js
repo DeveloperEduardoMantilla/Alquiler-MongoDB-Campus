@@ -27,4 +27,13 @@ appEmpleado.get("/vendedor", limitApi(), async (req,res)=>{
     res.send(result);
 })
 
+appEmpleado.get("/gerenteAsistente", limitApi(), async (req,res)=>{
+    
+    let db = await conx();
+    let empleado = db.collection("empleado");
+    
+    let result = await empleado.find({ Cargo:{ $in: ["Gerente", "Asistente"]}}).toArray();
+    res.send(result);
+})
+
 export default appEmpleado;
