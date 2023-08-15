@@ -5,7 +5,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --quiet app.js"
+    "dev": "nodemon --quiet app.js",
+    "tsc": "tsc -w"
   },
   "keywords": [],
   "author": "",
