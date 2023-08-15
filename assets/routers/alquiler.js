@@ -14,6 +14,13 @@ appAlquiler.get("/",limitApi(), async (req,res)=>{
     res.send(result);
 })
 
+appAlquiler.get("/detalles", limitApi(), async(req,res)=>{
+    let db = await conx();
+    let alquiler = db.collection("alquiler");
+    let result = await alquiler.find({Fecha_Inicio:'2023-07-05'},{_id:0}).toArray();
+    res.send(result);
+})
+
 appAlquiler.get("/disponible",limitApi(), async (req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
@@ -107,6 +114,7 @@ appAlquiler.get("/costoTotal/:idAlquiler", limitApi(), async(req,res)=>{
         res.send(result);
     }
 })
+
 
 
 export default appAlquiler;
