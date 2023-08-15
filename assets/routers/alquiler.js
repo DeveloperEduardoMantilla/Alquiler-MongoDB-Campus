@@ -3,17 +3,14 @@ import {conx} from '../db/atlas.js';
 import {limitApi} from '../limit/limit.js';
 
 
-const storageAlquiler = express();
-storageAlquiler.use(express.json())
+const appAlquiler = express();
+//Obtener los detalles del alquiler con el ID_Alquiler específico.
 
-storageAlquiler.get("/", limitApi, async (req,res)=>{
-    let db = await conx();
-    let alquiler = db.collection("alquiler");
-    let result = await alquiler.find({}).toArray();
-    res.send(result);
-})
+appAlquiler.use(express.json())
 
-storageAlquiler.get("/disponible",limitApi(), async (req,res)=>{
+
+
+appAlquiler.get("/disponible",limitApi(), async (req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
 
@@ -34,7 +31,7 @@ storageAlquiler.get("/disponible",limitApi(), async (req,res)=>{
     res.send(result);
 })
 
-storageAlquiler.get("/activos",limitApi(), async (req,res)=>{
+appAlquiler.get("/activos",limitApi(), async (req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
 
@@ -70,4 +67,31 @@ storageAlquiler.get("/activos",limitApi(), async (req,res)=>{
     res.send(result);
 })
 
-export default storageAlquiler;
+appAlquiler.get("/:idAlquiler", limitApi(), async(req,res)=>{
+    let db = await conx();
+    let alquiler = db.collection("alquiler");
+    let idAlquiler = req.params.idAlquiler;
+    let query = [
+        {
+            $project: {
+                "_id":0
+            }
+        },
+        {
+            $match: {
+                "ID_Alquiler":31
+            }
+        }
+    ]
+    
+    let result = await alquiler.aggregate(query).toArray();
+    res.send(result);
+})
+appAlquiler.get("/", limitApi, async (req,res)=>{
+    let db = await conx();
+    let alquiler = db.collection("alquiler");
+    let result = await alquiler.find({}).toArray();
+    res.send(result);
+})
+
+export default appAlquiler;
