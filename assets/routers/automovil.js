@@ -38,4 +38,11 @@ appAutomovil.get("/total",limitApi(),  async(req,res)=>{
     res.send(result); 
 })
 
+appAutomovil.get("/capacidad",limitApi(),  async(req,res)=>{
+  let db = await conx();
+  let alquiler = db.collection("automovil");
+  let result = await alquiler.find({ Capacidad: { $gte: 5 } },{_id:0,}).toArray();
+  res.send(result); 
+})
+
 export default appAutomovil;
