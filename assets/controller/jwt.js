@@ -4,6 +4,7 @@ import {Router} from "express";
 import {SignJWT, jwtVerify} from 'jose';
 import {Alquiler} from "./../controllerDTO/alquiler.js";
 import {Cliente} from "./../controllerDTO/cliente.js";
+import {Automovil} from "./../controllerDTO/automovil.js";
 
 dotenv.config("../");
 const JWT = Router();
@@ -12,7 +13,8 @@ const JWTVerify = Router();
 const DTO = (p1) =>{
     const match = {
         'Alquiler': Alquiler,
-        'Cliente' : Cliente
+        'Cliente' : Cliente,
+        'Automovil' : Automovil
     };  
     const instan = match[p1];
     if(!instan) throw {status:404, message:"Token solicitado no es valido :/"}
