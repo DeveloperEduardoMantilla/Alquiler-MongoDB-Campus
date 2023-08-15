@@ -6,6 +6,7 @@ import {Alquiler} from "./../controllerDTO/alquiler.js";
 import {Cliente} from "./../controllerDTO/cliente.js";
 import {Reserva} from "./../controllerDTO/reserva.js";
 import {Automovil} from "./../controllerDTO/automovil.js";
+import {Empleado} from "./../controllerDTO/empleado.js";
 
 dotenv.config("../");
 const JWT = Router();
@@ -17,6 +18,7 @@ const DTO = (p1) =>{
         'Cliente' : Cliente,
         'Automovil' : Automovil,
         'Reserva' : Reserva,
+        'Empleado' : Empleado
     };  
     const instan = match[p1];
     if(!instan) throw {status:404, message:"Token solicitado no es valido :/"}

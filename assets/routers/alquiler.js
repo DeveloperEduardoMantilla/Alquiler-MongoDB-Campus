@@ -2,13 +2,17 @@ import express from "express";
 import {conx} from '../db/atlas.js';
 import {limitApi} from '../limit/limit.js';
 
-
 const appAlquiler = express();
 //Obtener los detalles del alquiler con el ID_Alquiler específico.
 
 appAlquiler.use(express.json())
 
-
+appAlquiler.get("/",limitApi(), async (req,res)=>{
+    let db = await conx();
+    let alquiler = db.collection("alquiler");
+    let result = await alquiler.find({}).toArray();
+    res.send(result);
+})
 
 appAlquiler.get("/disponible",limitApi(), async (req,res)=>{
     let db = await conx();
@@ -79,19 +83,18 @@ appAlquiler.get("/:idAlquiler", limitApi(), async(req,res)=>{
         },
         {
             $match: {
-                "ID_Alquiler":31
+                "ID_Alquiler": parseInt(idAlquiler)
             }
         }
     ]
     
     let result = await alquiler.aggregate(query).toArray();
-    res.send(result);
+    if(result.length==0){
+        res.send({message:"No se encontraron registros"})
+    }else{
+        res.send(result);
+    }
 })
-appAlquiler.get("/", limitApi, async (req,res)=>{
-    let db = await conx();
-    let alquiler = db.collection("alquiler");
-    let result = await alquiler.find({}).toArray();
-    res.send(result);
-})
+
 
 export default appAlquiler;
