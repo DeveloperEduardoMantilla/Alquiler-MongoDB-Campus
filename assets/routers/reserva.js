@@ -45,6 +45,13 @@ appRerserva.get("/pendiente",limitApi(), async (req,res)=>{
     res.send(result);
 })
 
+appRerserva.get("/cliente/:idCliente",limitApi(), async (req,res)=>{
+    let db = await conx();
+    let idCliente = req.params.idCliente;
+    let reserva = db.collection("reserva");
+    let result = await reserva.find({ID_Cliente: parseInt(idCliente), Estado: "Pendientes"}).toArray();
+    res.send(result);
+})
 
 
 export default appRerserva;
