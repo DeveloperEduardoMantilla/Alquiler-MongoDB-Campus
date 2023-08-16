@@ -29,4 +29,14 @@ export class dtoEmpleado{
     @Expose({name:'cargo'})
     @IsDefined({message:()=>{throw {status:422, message: `El campo cargo es obligatorio.`}}})
     Cargo:string;
+
+    constructor(data: Partial<dtoEmpleado>){
+        Object.assign(this, data);
+        this.ID_Empleado = 0;
+        this.Nombre = "";
+        this.Apellido = "";
+        this.DNI = "";
+        this.Telefono = "";
+        this.Cargo = "";
+    }
 }

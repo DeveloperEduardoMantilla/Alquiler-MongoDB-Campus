@@ -29,4 +29,15 @@ export class dtoReserva{
     @Expose({name:'estado'})
     @IsDefined({message:()=>{throw {status:422, message: `El campo email es obligatorio.`}}})
     Estado:string;
+
+    constructor(data: Partial<dtoReserva>){
+        Object.assign(this, data);
+        this.ID_Rerserva = 0;
+        this.ID_Cliente = "";
+        this.ID_Automovil = "";
+        this.Fecha_Reserva = "";
+        this.Fecha_Inicio = "";
+        this.Fecha_Fin = "";
+        this.Estado = "";
+    }
 }

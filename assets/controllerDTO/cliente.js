@@ -10,6 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Expose } from "class-transformer";
 import { IsDefined } from "class-validator";
 export class dtoCliente {
+    constructor(data) {
+        Object.assign(this, data);
+        this.ID_Cliente = 0;
+        this.Nombre = "";
+        this.DNI = "";
+        this.Direccion = "";
+        this.Telefono = "";
+        this.Email = "";
+    }
 }
 __decorate([
     Expose({ name: 'id_cliente' }),

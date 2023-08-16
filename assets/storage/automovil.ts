@@ -29,4 +29,15 @@ export class dtoAutomovil{
     @Expose({name:'precio_diario'})
     @IsDefined({message:()=>{throw {status:422, message: `El campo precio_diario es obligatorio.`}}})
     Precio_Diario:string;
+
+    constructor(data: Partial<dtoAutomovil>){
+        Object.assign(this, data);
+        this.ID_Automovil = 0;
+        this.Marca = "";
+        this.Modelo = "";
+        this.Anio = 0;
+        this.Tipo = "";
+        this.Capacidad = 0;
+        this.Precio_Diario = "";
+    }
 }

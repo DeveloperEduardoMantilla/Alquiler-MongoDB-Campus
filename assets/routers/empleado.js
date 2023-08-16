@@ -1,12 +1,15 @@
 import express from "express";
 import {conx} from '../db/atlas.js';
 import {limitApi} from '../limit/limit.js';
+import {appMiddlewareEmpleadoVerify} from "../middleware/empleadoVerify.js";
 
 const appEmpleado = express();
 
 appEmpleado.use(express.json())
+appEmpleado.use(limitApi());
+appEmpleado.use(appMiddlewareEmpleadoVerify);
 
-appEmpleado.get("/vendedor", limitApi(), async (req,res)=>{
+appEmpleado.get("/vendedor", async (req,res)=>{
     let db = await conx();
     let empleado = db.collection("empleado");
 

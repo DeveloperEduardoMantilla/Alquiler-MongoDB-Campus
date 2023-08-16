@@ -10,6 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Expose } from "class-transformer";
 import { IsDefined } from "class-validator";
 export class dtoAutomovil {
+    constructor(data) {
+        Object.assign(this, data);
+        this.ID_Automovil = 0;
+        this.Marca = "";
+        this.Modelo = "";
+        this.Anio = 0;
+        this.Tipo = "";
+        this.Capacidad = 0;
+        this.Precio_Diario = "";
+    }
 }
 __decorate([
     Expose({ name: 'id_automovil' }),

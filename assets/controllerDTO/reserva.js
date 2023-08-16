@@ -10,6 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Expose } from "class-transformer";
 import { IsDefined } from "class-validator";
 export class dtoReserva {
+    constructor(data) {
+        Object.assign(this, data);
+        this.ID_Rerserva = 0;
+        this.ID_Cliente = "";
+        this.ID_Automovil = "";
+        this.Fecha_Reserva = "";
+        this.Fecha_Inicio = "";
+        this.Fecha_Fin = "";
+        this.Estado = "";
+    }
 }
 __decorate([
     Expose({ name: 'id_reserva' }),

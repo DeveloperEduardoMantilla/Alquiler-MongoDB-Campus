@@ -29,4 +29,14 @@ export class dtoCliente{
     @Expose({name:'email'})
     @IsDefined({message:()=>{throw {status:422, message: `El campo email es obligatorio.`}}})
     Email:string;
+
+    constructor(data: Partial<dtoCliente>){
+        Object.assign(this, data);
+        this.ID_Cliente = 0;
+        this.Nombre = "";
+        this.DNI = "";
+        this.Direccion = "";
+        this.Telefono = "";
+        this.Email = "";
+    }
 }

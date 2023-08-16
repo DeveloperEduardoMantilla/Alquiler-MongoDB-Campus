@@ -1,10 +1,13 @@
 import express from "express";
 import {conx} from '../db/atlas.js';
 import {limitApi} from '../limit/limit.js';
+import {appMiddlewareClienteVerify} from "../middleware/clienteVerify.js";
+
 const appCliente = express();
 
-
-appCliente.get("/dniCliente/:id", limitApi(), async (req,res)=>{
+appCliente.use(limitApi());
+appCliente.use(appMiddlewareClienteVerify);
+appCliente.get("/dniCliente/:id", async (req,res)=>{
     let db = await conx();
     let dni = req.params.id;
     let alquiler = db.collection("cliente");
@@ -12,7 +15,7 @@ appCliente.get("/dniCliente/:id", limitApi(), async (req,res)=>{
     res.send(result);
 })
 
-appCliente.get("/alquiler", limitApi(), async (req,res)=>{
+appCliente.get("/alquiler", async (req,res)=>{
     let db = await conx();
     let query = [
         {
@@ -46,7 +49,7 @@ appCliente.get("/alquiler", limitApi(), async (req,res)=>{
     res.send(result);
 })
 
-appCliente.get("/",limitApi(), async (req,res)=>{
+appCliente.get("/", async (req,res)=>{
     let db = await conx();
     let alquiler = db.collection("cliente");
     let query = {        

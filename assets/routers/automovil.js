@@ -1,9 +1,14 @@
 import express from "express";
 import {conx} from '../db/atlas.js';
 import {limitApi} from '../limit/limit.js';
+import {appMiddlewareAutomovilVerify} from "../middleware/automovilVerify.js";
+
 const appAutomovil = express();
 
-appAutomovil.get("/total",limitApi(),  async(req,res)=>{
+appAutomovil.use(limitApi());
+appAutomovil.use(appMiddlewareAutomovilVerify);
+
+appAutomovil.get("/total", async(req,res)=>{
     let db = await conx();
     let alquiler = db.collection("sucursal");
     let query = [
@@ -38,14 +43,14 @@ appAutomovil.get("/total",limitApi(),  async(req,res)=>{
     res.send(result); 
 })
 
-appAutomovil.get("/capacidad",limitApi(),  async(req,res)=>{
+appAutomovil.get("/capacidad", async(req,res)=>{
   let db = await conx();
   let alquiler = db.collection("automovil");
   let result = await alquiler.find({ Capacidad: { $gte: 5 } },{_id:0,}).toArray();
   res.send(result); 
 })
 
-appAutomovil.get("/ordenados",limitApi(),  async(req,res)=>{
+appAutomovil.get("/ordenados", async(req,res)=>{
   let db = await conx();
   let alquiler = db.collection("automovil");
   let query = [
@@ -65,7 +70,7 @@ appAutomovil.get("/ordenados",limitApi(),  async(req,res)=>{
   res.send(result); 
 })
 
-appAutomovil.get("/sucursal",limitApi(),  async(req,res)=>{
+appAutomovil.get("/sucursal", async(req,res)=>{
   let db = await conx();
   let alquiler = db.collection("sucursal");
   let query = [
@@ -95,7 +100,7 @@ appAutomovil.get("/sucursal",limitApi(),  async(req,res)=>{
   res.send(result); 
 })
 
-appAutomovil.get("/capacidad/disponibles",limitApi(),  async(req,res)=>{
+appAutomovil.get("/capacidad/disponibles", async(req,res)=>{
   let db = await conx();
   let alquiler = db.collection("automovil");
   let query = [
