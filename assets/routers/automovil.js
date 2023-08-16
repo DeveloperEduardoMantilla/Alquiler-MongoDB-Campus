@@ -65,4 +65,34 @@ appAutomovil.get("/ordenados",limitApi(),  async(req,res)=>{
   res.send(result); 
 })
 
+appAutomovil.get("/sucursal",limitApi(),  async(req,res)=>{
+  let db = await conx();
+  let alquiler = db.collection("sucursal");
+  let query = [
+    {
+        $lookup: {
+          from: "sucursal_automovil",
+          localField: "ID_Sucursal",
+          foreignField: "ID_Sucursal",
+          as: "data_Automoviles"
+        }
+    },
+    {
+        $addFields: {
+          "total_Automoviles": { $sum: "$data_Automoviles.Cantidad_Disponible" }
+        }
+    },
+    {
+        $project: {
+          "_id": 0,
+          "Telefono": 0,
+          "data_Automoviles._id": 0,
+          "data_Automoviles.ID_Sucursal": 0,
+        }
+    }
+  ];
+  let result = await alquiler.aggregate(query).toArray();
+  res.send(result); 
+})
+
 export default appAutomovil;
