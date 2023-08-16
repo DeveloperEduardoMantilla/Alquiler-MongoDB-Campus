@@ -122,6 +122,29 @@ appAlquiler.get("/costoTotal/:idAlquiler", limitApi(), async(req,res)=>{
     }
 })
 
+appAlquiler.get("/alquileres/filtroFecha", limitApi(), async(req,res)=>{
+    let db = await conx();
+    let alquiler = db.collection("alquiler");
+    
+    let query = [
+        {
+            $match: {
+                Fecha_Inicio: {
+                    $gte: "2023-07-05",
+                    $lte: "2023-07-10"
+                }
+            }
+        },
+        { $project: {"_id":0} },
+        { $sort: {Fecha_Inicio: 1}}
+    ];
 
+    let result = await alquiler.aggregate(query).toArray();
+    if(result.length==0){
+        res.send({message:"No se encontraron registros"})
+    }else{
+        res.send(result);
+    }
+})
 
 export default appAlquiler;
