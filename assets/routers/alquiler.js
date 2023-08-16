@@ -42,6 +42,13 @@ appAlquiler.get("/disponible",limitApi(), async (req,res)=>{
     res.send(result);
 })
 
+appAlquiler.get("/total",limitApi(), async (req,res)=>{
+    let db = await conx();
+    let alquiler = db.collection("alquiler");
+    let result = await alquiler.countDocuments();
+    res.send({"message":"Cantidad de almacenes registrados "+result});
+})
+
 appAlquiler.get("/activos",limitApi(), async (req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
