@@ -45,4 +45,24 @@ appAutomovil.get("/capacidad",limitApi(),  async(req,res)=>{
   res.send(result); 
 })
 
+appAutomovil.get("/ordenados",limitApi(),  async(req,res)=>{
+  let db = await conx();
+  let alquiler = db.collection("automovil");
+  let query = [
+    {
+        $project:{
+            "_id": 0,
+        }
+    },
+    {
+        $sort:{
+            "Marca": 1,
+            "Modelo": 1
+        }
+    }
+  ];
+  let result = await alquiler.aggregate(query).toArray();
+  res.send(result); 
+})
+
 export default appAutomovil;
