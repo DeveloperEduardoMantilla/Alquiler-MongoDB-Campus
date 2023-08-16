@@ -12,6 +12,40 @@ appCliente.get("/dniCliente/:id", limitApi(), async (req,res)=>{
     res.send(result);
 })
 
+appCliente.get("/alquiler", limitApi(), async (req,res)=>{
+    let db = await conx();
+    let query = [
+        {
+            $lookup: {
+                from: "alquiler",
+                localField: "ID_Cliente",
+                foreignField: "ID_Cliente",
+                as: "data_Alquiler"
+            }
+        },
+        {
+            $project: {
+                "_id" : 0,
+                "nuevaDireccion":0,
+                "Telefono":0,
+                "Email":0,
+                "data_Alquiler._id":0,
+                "data_Alquiler.ID_Cliente":0,
+                "data_Alquiler.Costo_Total":0
+            }
+        },
+        {
+            $match: {
+                data_Alquiler: { $ne: [] }
+            }
+        }
+    ];
+
+    let alquiler = db.collection("cliente");
+    let result = await alquiler.aggregate(query).toArray();
+    res.send(result);
+})
+
 appCliente.get("/",limitApi(), async (req,res)=>{
     let db = await conx();
     let alquiler = db.collection("cliente");
