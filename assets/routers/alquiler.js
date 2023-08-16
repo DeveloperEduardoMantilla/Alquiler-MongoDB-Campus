@@ -1,27 +1,29 @@
 import express from "express";
 import {conx} from '../db/atlas.js';
 import {limitApi} from '../limit/limit.js';
+import {appMiddlewareAlquilerVerify} from "../middleware/alquilerVerify.js";
 
 const appAlquiler = express();
-//Obtener los detalles del alquiler con el ID_Alquiler específico.
 
-appAlquiler.use(express.json())
+appAlquiler.use(express.json());
+appAlquiler.use(limitApi());
+appAlquiler.use(appMiddlewareAlquilerVerify);
 
-appAlquiler.get("/",limitApi(), async (req,res)=>{
+appAlquiler.get("/", async (req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
     let result = await alquiler.find({}).toArray();
     res.send(result);
 })
 
-appAlquiler.get("/detalles", limitApi(), async(req,res)=>{
+appAlquiler.get("/detalles",  async(req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
     let result = await alquiler.find({Fecha_Inicio:'2023-07-05'},{_id:0}).toArray();
     res.send(result);
 })
 
-appAlquiler.get("/disponible",limitApi(), async (req,res)=>{
+appAlquiler.get("/disponible", async (req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
 
@@ -42,14 +44,14 @@ appAlquiler.get("/disponible",limitApi(), async (req,res)=>{
     res.send(result);
 })
 
-appAlquiler.get("/total",limitApi(), async (req,res)=>{
+appAlquiler.get("/total", async (req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
     let result = await alquiler.countDocuments();
     res.send({"message":"Cantidad de almacenes registrados "+result});
 })
 
-appAlquiler.get("/activos",limitApi(), async (req,res)=>{
+appAlquiler.get("/activos", async (req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
 
@@ -85,7 +87,7 @@ appAlquiler.get("/activos",limitApi(), async (req,res)=>{
     res.send(result);
 })
 
-appAlquiler.get("/:idAlquiler", limitApi(), async(req,res)=>{
+appAlquiler.get("/:idAlquiler",  async(req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
     let idAlquiler = req.params.idAlquiler;
@@ -110,7 +112,7 @@ appAlquiler.get("/:idAlquiler", limitApi(), async(req,res)=>{
     }
 })
 
-appAlquiler.get("/costoTotal/:idAlquiler", limitApi(), async(req,res)=>{
+appAlquiler.get("/costoTotal/:idAlquiler",  async(req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
     let idAlquiler = req.params.idAlquiler;
@@ -122,7 +124,7 @@ appAlquiler.get("/costoTotal/:idAlquiler", limitApi(), async(req,res)=>{
     }
 })
 
-appAlquiler.get("/alquileres/filtroFecha", limitApi(), async(req,res)=>{
+appAlquiler.get("/alquileres/filtroFecha",  async(req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
     

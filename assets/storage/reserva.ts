@@ -1,7 +1,7 @@
 import { Expose, Transform } from "class-transformer";
 import { IsDefined } from "class-validator";
 
-export class Reserva{
+export class dtoReserva{
     @Expose({name:'id_reserva'})
     @IsDefined({message:()=>{throw {status:422, message: `El campo id_reserva es obligatorio.`}}})
     ID_Rerserva:number;

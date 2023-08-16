@@ -9,40 +9,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Expose } from "class-transformer";
 import { IsDefined } from "class-validator";
-export class Automovil {
+export class dtoAutomovil {
 }
 __decorate([
     Expose({ name: 'id_automovil' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo id_automovil es obligatorio.` }; } }),
     __metadata("design:type", Number)
-], Automovil.prototype, "ID_Automovil", void 0);
+], dtoAutomovil.prototype, "ID_Automovil", void 0);
 __decorate([
     Expose({ name: 'marca' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo marca es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Automovil.prototype, "Marca", void 0);
+], dtoAutomovil.prototype, "Marca", void 0);
 __decorate([
     Expose({ name: 'modelo' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo modelo es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Automovil.prototype, "Modelo", void 0);
+], dtoAutomovil.prototype, "Modelo", void 0);
 __decorate([
     Expose({ name: 'anio' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo anio es obligatorio.` }; } }),
     __metadata("design:type", Number)
-], Automovil.prototype, "Anio", void 0);
+], dtoAutomovil.prototype, "Anio", void 0);
 __decorate([
     Expose({ name: 'tipo' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo tipo es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Automovil.prototype, "Tipo", void 0);
+], dtoAutomovil.prototype, "Tipo", void 0);
 __decorate([
     Expose({ name: 'capacidad' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo capacidad es obligatorio.` }; } }),
     __metadata("design:type", Number)
-], Automovil.prototype, "Capacidad", void 0);
+], dtoAutomovil.prototype, "Capacidad", void 0);
 __decorate([
     Expose({ name: 'precio_diario' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo precio_diario es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Automovil.prototype, "Precio_Diario", void 0);
+], dtoAutomovil.prototype, "Precio_Diario", void 0);

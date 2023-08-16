@@ -2,23 +2,24 @@ import { plainToClass, classToPlain } from "class-transformer";
 import dotenv from "dotenv";
 import {Router} from "express";
 import {SignJWT, jwtVerify} from 'jose';
-import {Alquiler} from "./../controllerDTO/alquiler.js";
-import {Cliente} from "./../controllerDTO/cliente.js";
-import {Reserva} from "./../controllerDTO/reserva.js";
-import {Automovil} from "./../controllerDTO/automovil.js";
-import {Empleado} from "./../controllerDTO/empleado.js";
+import {dtoAlquiler} from "./../controllerDTO/alquiler.js";
+import {dtoCliente} from "./../controllerDTO/cliente.js";
+import {dtoReserva} from "./../controllerDTO/reserva.js";
+import {dtoAutomovil} from "./../controllerDTO/automovil.js";
+import {dtoEmpleado} from "./../controllerDTO/empleado.js";
 
 dotenv.config("../");
+
 const JWT = Router();
 const JWTVerify = Router();
 
-const DTO = (p1) =>{
+const estructuraDto = (p1) =>{
     const match = {
-        'Alquiler': Alquiler,
-        'Cliente' : Cliente,
-        'Automovil' : Automovil,
-        'Reserva' : Reserva,
-        'Empleado' : Empleado
+        'Alquiler': dtoAlquiler,
+        'Cliente' : dtoCliente,
+        'Automovil' : dtoAutomovil,
+        'Reserva' : dtoReserva,
+        'Empleado' : dtoEmpleado
     };  
     const instan = match[p1];
     if(!instan) throw {status:404, message:"Token solicitado no es valido :/"}
@@ -26,8 +27,9 @@ const DTO = (p1) =>{
 };
 
 JWT.use('/:collection', async(req,res)=>{
-    try{
-        let instan = DTO(req.params.collection).atributos;
+    try{    
+        let instan = estructuraDto(req.params.collection).atributos;
+        //let instan =  plainToClass(eval(req.params.collection), {}, { ignoreDecorators: true });
         const enconder = new TextEncoder();
         const jwtConstructor = new SignJWT(Object.assign({},classToPlain(instan)));
         const jwt = await jwtConstructor
@@ -35,7 +37,6 @@ JWT.use('/:collection', async(req,res)=>{
         .setIssuedAt()
         .setExpirationTime("1h")
         .sign(enconder.encode(process.env.JWT_PRIVATE_KEY));
-        req.data = jwt;
         res.status(201).send({status:201, message: jwt});
     }catch(e){
         res.status(404).send({status:404, message: e.message})
@@ -60,5 +61,6 @@ JWTVerify.use('/', async(req,res,next)=>{
 
 export {
     JWT, 
-    JWTVerify
+    JWTVerify,
+    estructuraDto
 }

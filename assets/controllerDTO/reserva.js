@@ -9,40 +9,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Expose } from "class-transformer";
 import { IsDefined } from "class-validator";
-export class Reserva {
+export class dtoReserva {
 }
 __decorate([
     Expose({ name: 'id_reserva' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo id_reserva es obligatorio.` }; } }),
     __metadata("design:type", Number)
-], Reserva.prototype, "ID_Rerserva", void 0);
+], dtoReserva.prototype, "ID_Rerserva", void 0);
 __decorate([
     Expose({ name: 'id_cliente' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo id_cliente es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Reserva.prototype, "ID_Cliente", void 0);
+], dtoReserva.prototype, "ID_Cliente", void 0);
 __decorate([
     Expose({ name: 'id_automovil' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo id_automovil es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Reserva.prototype, "ID_Automovil", void 0);
+], dtoReserva.prototype, "ID_Automovil", void 0);
 __decorate([
     Expose({ name: 'fecha_reserva' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo fecha_reserva es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Reserva.prototype, "Fecha_Reserva", void 0);
+], dtoReserva.prototype, "Fecha_Reserva", void 0);
 __decorate([
     Expose({ name: 'fecha_inicio' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo fecha_inicio es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Reserva.prototype, "Fecha_Inicio", void 0);
+], dtoReserva.prototype, "Fecha_Inicio", void 0);
 __decorate([
     Expose({ name: 'fecha_fin' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo fecha_fin es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Reserva.prototype, "Fecha_Fin", void 0);
+], dtoReserva.prototype, "Fecha_Fin", void 0);
 __decorate([
     Expose({ name: 'estado' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo email es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Reserva.prototype, "Estado", void 0);
+], dtoReserva.prototype, "Estado", void 0);

@@ -9,40 +9,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Expose } from "class-transformer";
 import { IsDefined } from "class-validator";
-export class Empleado {
+export class dtoEmpleado {
 }
 __decorate([
     Expose({ name: 'id_empleado' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo id_empleado es obligatorio.` }; } }),
     __metadata("design:type", Number)
-], Empleado.prototype, "ID_Empleado", void 0);
+], dtoEmpleado.prototype, "ID_Empleado", void 0);
 __decorate([
     Expose({ name: 'nombre' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo nombre es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Empleado.prototype, "Nombre", void 0);
+], dtoEmpleado.prototype, "Nombre", void 0);
 __decorate([
     Expose({ name: 'apellido' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo apellido es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Empleado.prototype, "Apellido", void 0);
+], dtoEmpleado.prototype, "Apellido", void 0);
 __decorate([
     Expose({ name: 'dni' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo dni es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Empleado.prototype, "DNI", void 0);
+], dtoEmpleado.prototype, "DNI", void 0);
 __decorate([
     Expose({ name: 'direccion' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo direccion es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Empleado.prototype, "Direccion", void 0);
+], dtoEmpleado.prototype, "Direccion", void 0);
 __decorate([
     Expose({ name: 'telefono' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo telefono es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Empleado.prototype, "Telefono", void 0);
+], dtoEmpleado.prototype, "Telefono", void 0);
 __decorate([
     Expose({ name: 'cargo' }),
     IsDefined({ message: () => { throw { status: 422, message: `El campo cargo es obligatorio.` }; } }),
     __metadata("design:type", String)
-], Empleado.prototype, "Cargo", void 0);
+], dtoEmpleado.prototype, "Cargo", void 0);
