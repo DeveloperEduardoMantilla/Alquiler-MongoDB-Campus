@@ -12,7 +12,18 @@ appAlquiler.use(appMiddlewareAlquilerVerify);
 appAlquiler.get("/", async (req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
-    let result = await alquiler.find({}).toArray();
+    let result = await alquiler.find({},{
+        projection : {
+            "_id":0,
+            "id_alquiler":"$ID_Alquiler",
+            "id_cliente":"$ID_Cliente",
+            "id_automovil":"$ID_Automovil",
+            "fecha_inicio":"$Fecha_Inicio",
+            "fecha_fin":"$Fecha_Fin",
+            "costo_total":"$Costo_Total",
+            "estado":"$Estado"
+        } 
+    }).toArray();
     res.send(result);
 })
 
@@ -36,6 +47,7 @@ appAlquiler.get("/disponible", async (req,res)=>{
         {
             $project: {
                 "_id":0
+            
             }
         }
     ];
