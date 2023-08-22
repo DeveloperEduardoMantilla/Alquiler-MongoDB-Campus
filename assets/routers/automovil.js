@@ -55,7 +55,7 @@ appAutomovil.get("/ordenados", async(req,res)=>{
   let alquiler = db.collection("automovil");
   let query = [
     {
-        $project:{
+        projection:{
             "_id": 0,
         }
     },

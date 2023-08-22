@@ -30,7 +30,16 @@ appAlquiler.get("/", async (req,res)=>{
 appAlquiler.get("/detalles",  async(req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
-    let result = await alquiler.find({Fecha_Inicio:'2023-07-05'},{_id:0}).toArray();
+    let result = await alquiler.find({Fecha_Inicio:'2023-07-05'},{projection:{
+        "_id":0,
+        "id_alquiler": "$ID_Alquiler",
+        "id_cliente": "$ID_Cliente",
+        "id_automovil": "$ID_Automovil",
+        "fecha_inicio": "$Fecha_Inicio",
+        "fecha_fin": "$Fecha_Fin",
+        "costo_total": "$Costo_Total",
+        "estado": "$Estado"
+    }}).toArray();
     res.send(result);
 })
 
@@ -39,15 +48,21 @@ appAlquiler.get("/disponible", async (req,res)=>{
     let alquiler = db.collection("alquiler");
 
     let query = [
-        {
+        {   
             $match:{
                 Estado:{$eq:"Disponible"}
             }
         },
         {
-            $project: {
-                "_id":0
-            
+            $project:{
+                "_id":0,
+                "id_alquiler": "$ID_Alquiler",
+                "id_cliente": "$ID_Cliente",
+                "id_automovil": "$ID_Automovil",
+                "fecha_inicio": "$Fecha_Inicio",
+                "fecha_fin": "$Fecha_Fin",
+                "costo_total": "$Costo_Total",
+                "estado": "$Estado"
             }
         }
     ];
@@ -83,14 +98,14 @@ appAlquiler.get("/activos", async (req,res)=>{
         },
         {
             $project:{
-                "_id":0,
-                "Estado":0,
-                "ID_Cliente":0,
-                "dataCliente._id":0,
-                "dataCliente.DNI":0,
-                "dataCliente.Direccion":0,
-                "dataCliente.Telefono":0,
-                "dataCliente.Email":0
+                "id_alquiler":"$ID_Alquiler",
+                "id_automovil":"$ID_Automovil",
+                "fecha_inicio":"$Fecha_Inicio",
+                "fecha_fin":"$Fecha_Fin",
+                "costo_total":"$Costo_Total",
+                "cliente_id": { $first: ["$dataCliente.ID_Cliente"] },
+                "cliente_nombre": { $first: ["$dataCliente.Nombre"] },
+                "cliente_apellido": { $first: ["$dataCliente.Apellido"] }
             }
         }
     ];
@@ -105,13 +120,20 @@ appAlquiler.get("/:idAlquiler",  async(req,res)=>{
     let idAlquiler = req.params.idAlquiler;
     let query = [
         {
-            $project: {
-                "_id":0
+            $project:{
+                "_id":0,
+                "id_alquiler": "$ID_Alquiler",
+                "id_cliente": "$ID_Cliente",
+                "id_automovil": "$ID_Automovil",
+                "fecha_inicio": "$Fecha_Inicio",
+                "fecha_fin": "$Fecha_Fin",
+                "costo_total": "$Costo_Total",
+                "estado": "$Estado"
             }
         },
         {
             $match: {
-                "ID_Alquiler": parseInt(idAlquiler)
+                "id_alquiler": parseInt(idAlquiler)
             }
         }
     ]
@@ -128,7 +150,7 @@ appAlquiler.get("/costoTotal/:idAlquiler",  async(req,res)=>{
     let db = await conx();
     let alquiler = db.collection("alquiler");
     let idAlquiler = req.params.idAlquiler;
-    let result = await alquiler.find({ID_Alquiler: parseInt(idAlquiler)},{projection:{_id:0, ID_Alquiler:1, Costo_Total:1}}).toArray();
+    let result = await alquiler.find({ID_Alquiler: parseInt(idAlquiler)},{projection:{_id:0, "id_alquiler":"$ID_Alquiler", "costo_total":"$Costo_Total"}}).toArray();
     if(result.length==0){
         res.send({message:"No se encontraron registros"})
     }else{
@@ -149,7 +171,18 @@ appAlquiler.get("/alquileres/filtroFecha",  async(req,res)=>{
                 }
             }
         },
-        { $project: {"_id":0} },
+        { 
+        $project:{
+            "_id":0,
+            "id_alquiler": "$ID_Alquiler",
+            "id_cliente": "$ID_Cliente",
+            "id_automovil": "$ID_Automovil",
+            "fecha_inicio": "$Fecha_Inicio",
+            "fecha_fin": "$Fecha_Fin",
+            "costo_total": "$Costo_Total",
+            "estado": "$Estado"
+        }
+    },
         { $sort: {Fecha_Inicio: 1}}
     ];
 

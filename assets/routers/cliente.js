@@ -11,7 +11,20 @@ appCliente.get("/dniCliente/:id", async (req,res)=>{
     let db = await conx();
     let dni = req.params.id;
     let alquiler = db.collection("cliente");
-    let result = await alquiler.find({DNI:dni},{_id:0, ID_Cliente:1, Nombre:1, Apellido:1, DNI:1, Telefono:1}).toArray();
+    let query = [{
+        DNI:dni
+        },{
+            $project:{
+                _id:0, 
+                "id_cliente":"$ID_Cliente", 
+                "nombre":"$Nombre",
+                "apellido":"$Apellido", 
+                "dni":"$DNI", 
+                "telefono":"$Telefono"
+            }
+        
+        }]
+    let result = await alquiler.find(...query).toArray();
     res.send(result);
 })
 
