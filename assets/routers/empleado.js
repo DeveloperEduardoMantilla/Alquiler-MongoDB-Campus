@@ -23,6 +23,17 @@ appEmpleado.get("/vendedor", async (req,res)=>{
             $match: {
                 "Cargo":"Vendedor"
             }
+        },
+        {
+            $project:{
+                "idEmpleado":"$ID_Empleado",
+                "nombre":"$Nombre",
+                "apellido":"$Apellido",
+                "dni":"$DNI",
+                "direccion":"$Direccion",
+                "telefono":"$Telefono",
+                "cargo":"$Cargo",
+            }
         }
     ];
     
@@ -34,8 +45,19 @@ appEmpleado.get("/gerenteAsistente", limitApi(), async (req,res)=>{
     
     let db = await conx();
     let empleado = db.collection("empleado");
-    
-    let result = await empleado.find({ Cargo:{ $in: ["Gerente", "Asistente"]}}).toArray();
+    let query={
+        projection:{
+            "_id":0,
+            "idEmpleado":"$ID_Empleado",
+            "nombre":"$Nombre",
+            "apellido":"$Apellido",
+            "dni":"$DNI",
+            "direccion":"$Direccion",
+            "telefono":"$Telefono",
+            "cargo":"$Cargo"
+        }
+    }
+    let result = await empleado.find({ Cargo:{ $in: ["Gerente", "Asistente"]}},query).toArray();
     res.send(result);
 })
 

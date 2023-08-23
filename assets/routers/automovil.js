@@ -31,10 +31,8 @@ appAutomovil.get("/total", async(req,res)=>{
         },
         {
             $project: {
-              "_id": 0,
-              "ID_Sucursal": "$_id",
-              "Nombre": 1,
-              "Total_Automoviles": "$total_Automoviles"
+              "idSucursal": "$_id",
+              "cantidadAutomoviles":"$total_Automoviles"
             }
         },
         { $sort: { ID_Sucursal: 1 } }
@@ -46,17 +44,36 @@ appAutomovil.get("/total", async(req,res)=>{
 appAutomovil.get("/capacidad", async(req,res)=>{
   let db = await conx();
   let alquiler = db.collection("automovil");
-  let result = await alquiler.find({ Capacidad: { $gte: 5 } },{_id:0,}).toArray();
+  let query={
+    projection:{
+      _id:0,
+      "idAutomovil":"$ID_Automovil",
+      "marca":"$Marca",
+      "modelo":"$Modelo",
+      "año":"$Anio",
+      "tipo":"$Tipo",
+      "capacidad":"$Capacidad",
+      "precioDiario":"$Precio_Diario",
+     }
+  }
+  let result = await alquiler.find({ Capacidad: { $gte: 5 } }, query).toArray();
   res.send(result); 
 })
 
 appAutomovil.get("/ordenados", async(req,res)=>{
   let db = await conx();
-  let alquiler = db.collection("automovil");
+  let automovil = db.collection("automovil");
   let query = [
     {
-        projection:{
+        $project:{
             "_id": 0,
+            "idAutomovil":"$ID_Automovil",
+            "marca":"$Marca",
+            "modelo":"$Modelo",
+            "año":"$Anio",
+            "tipo":"$Tipo",
+            "capacidad":"$Capacidad",
+            "precioDiario":"$Precio_Diario"
         }
     },
     {
@@ -66,7 +83,7 @@ appAutomovil.get("/ordenados", async(req,res)=>{
         }
     }
   ];
-  let result = await alquiler.aggregate(query).toArray();
+  let result = await automovil.aggregate(query).toArray();
   res.send(result); 
 })
 
@@ -90,9 +107,9 @@ appAutomovil.get("/sucursal", async(req,res)=>{
     {
         $project: {
           "_id": 0,
-          "Telefono": 0,
-          "data_Automoviles._id": 0,
-          "data_Automoviles.ID_Sucursal": 0,
+          "sucursal":"$Nombre",
+          "direccion":"$Direccion",
+          "totalAutomoviles":"$total_Automoviles"
         }
     }
   ];
@@ -121,8 +138,20 @@ appAutomovil.get("/capacidad/disponibles", async(req,res)=>{
     {
         $project: {
           "_id":0,
-          "data_Alquiler._id": 0,
-          "data_Alquiler.ID_Automovil_id": 0
+          "idAutomovil":"$ID_Automovil",
+          "marca":"$Marca",
+          "modelo":"$Modelo",
+          "año":"$Anio",
+          "tipo":"$Tipo",
+          "capacidad":"$Capacidad",
+          "precioDiario":"$Precio_Diario",
+          "alquilerId":{$first:["$data_Alquiler.ID_Alquiler"]},
+          "alquilerIdCliente":{$first:["$data_Alquiler.ID_Cliente"]},
+          "alquilerIdAutomovil":{$first:["$data_Alquiler.ID_Automovil"]},
+          "alquilerFechaInicio":{$first:["$data_Alquiler.Fecha_Inicio"]},
+          "alquilerFechaFin":{$first:["$data_Alquiler.Fecha_Fin"]},
+          "alquilerCostoTotal":{$first:["$data_Alquiler.Costo_Total"]},
+          "alquilerEstado":{$first:["$data_Alquiler.Estado"]}
         }
     }
   ];

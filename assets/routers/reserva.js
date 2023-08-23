@@ -31,15 +31,34 @@ appRerserva.get("/pendiente", async (req,res)=>{
             }
         },
         {
-            $project: {
-                "_id":0,
-                "dataAutomovil._id":0,
-                "dataCliente._id":0,
+            $match: {
+                "Estado":{$eq: "Pendientes"}
             }
         },
         {
-            $match: {
-                "Estado":{$eq: "Pendientes"}
+            $project: {
+                "_id":0,
+                "idReserva":"$ID_Reserva",
+                "idCliente":"$ID_Cliente",
+                "idAutomovil":"$ID_Automovil",
+                "fechaReserva":"$Fecha_Reserva",
+                "fechaInicio":"$Fecha_Inicio",
+                "fechaFin":"$Fecha_Fin",
+                "estado":"$Estado",
+                "automovilID":{$first:["$dataAutomovil.ID_Automovil"]},
+                "automovilMarca":{$first:["$dataAutomovil.Marca"]},
+                "automovilModelo": {$first:["$dataAutomovil.Modelo"]},
+                "automovilAnio": {$first:["$dataAutomovil.Anio"]},
+                "automovilTipo": {$first:["$dataAutomovil.Tipo"]},
+                "automovilCapacidad": {$first:["$dataAutomovil.Capacidad"]},
+                "automovilPrecioDiario": {$first:["$dataAutomovil.Precio_Diario"]},
+                "clienteId":{$first:["$dataCliente.ID_Cliente"]},
+                "clienteNombre":{$first:["$dataCliente.Nombre"]},
+                "clienteDni":{$first:["$dataCliente.Apellido"]},
+                "clienteDireccion":{$first:["$dataCliente.DNI"]},
+                "clienteTelefono":{$first:["$dataCliente.Direccion"]},
+                "clienteEmail":{$first:["$dataCliente.Telefono"]},
+                "clienteId":{$first:["$dataCliente.Email"]}
             }
         }
     ];
@@ -52,7 +71,19 @@ appRerserva.get("/cliente/:idCliente", async (req,res)=>{
     let db = await conx();
     let idCliente = req.params.idCliente;
     let reserva = db.collection("reserva");
-    let result = await reserva.find({ID_Cliente: parseInt(idCliente), Estado: "Pendientes"}).toArray();
+    let query ={
+        projection:{
+            "_id":0,
+            "idReserva":"$ID_Reserva",
+            "idCliente":"$ID_Cliente",
+            "idAutomovil":"$ID_Automovil",
+            "fechaReserva":"$Fecha_Reserva",
+            "fechaInicio":"$Fecha_Inicio",
+            "fechaFIn":"$Fecha_Fin",
+            "estado":"$Estado"
+             }
+    }
+    let result = await reserva.find({ID_Cliente: parseInt(idCliente), Estado: "Pendientes"}, query).toArray();
     res.send(result);
 })
 
